@@ -1,0 +1,55 @@
+{
+  "realm": "rest-keycloack-service",
+  "enabled": true,
+  "clients": [
+    {
+      "clientId": "rest-keycloack-service",
+      "directAccessGrantsEnabled": true,
+      "publicClient": false,
+      "secret": "my-client-secret",
+      "redirectUris": ["http://localhost:8081/*"],
+      "defaultRoles": ["USER"]
+    }
+  ],
+  "roles": {
+    "realm": [
+      { "name": "USER" },
+      { "name": "ADMIN" }
+    ]
+  },
+  "users": [
+    {
+      "username": "user1",
+      "email": "user1@hakktastic.nl",
+      "firstName": "User",
+      "lastName": "TheOneAndOnly",
+      "enabled": true,
+      "emailVerified": true,
+      "requiredActions": [],
+      "credentials": [{ "type": "password", "value": "password", "temporary": false }],
+      "realmRoles": ["USER"]
+    },
+    {
+      "username": "admin1",
+      "email": "admin1@hakktastic.nl",
+      "firstName": "Admin",
+      "lastName": "TheOneAndOnly",
+      "enabled": true,
+      "emailVerified": true,
+      "requiredActions": [],
+      "credentials": [{ "type": "password", "value": "password", "temporary": false }],
+      "realmRoles": ["ADMIN"]
+    },
+    {
+      "username": "orphan1",
+      "email": "orphan11@hakktastic.nl",
+      "firstName": "Orphan",
+      "lastName": "TheOneAndOnly",
+      "enabled": true,
+      "emailVerified": true,
+      "requiredActions": [],
+      "credentials": [{ "type": "password", "value": "password", "temporary": false }],
+      "realmRoles": []
+    }
+  ]
+}

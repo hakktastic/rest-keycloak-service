@@ -1,0 +1,51 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: rest-keycloack-service
+
+  docker:
+    compose:
+      enabled: true
+      file: ./compose.yaml
+      lifecycle-management: start_and_stop
+      start:
+        command: up
+      stop:
+        command: down
+        arguments:
+          - "-v"
+          - "--remove-orphans"
+          - "--timeout=1"
+        timeout: 1
+
+  devtools:
+    restart:
+      enabled: true
+    livereload:
+      enabled: true
+
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8081/realms/rest-keycloack-service
+
+management:
+  tracing:
+    propagation:
+      produce: w3c
+      consume: w3c
+  otlp:
+    metrics:
+      export:
+        enabled: false
+
+logging:
+  level:
+    nl.hakktastic: DEBUG
+    org.springframework.security: DEBUG
+
+  pattern:
+    console: "%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr(%5p) %clr(${PID:- }){magenta} %clr([%30.30t]){faint} %clr([%32.32X{traceId}]){blue} %clr(%-60.60logger{39}){cyan} %clr(:){faint} %m%n"

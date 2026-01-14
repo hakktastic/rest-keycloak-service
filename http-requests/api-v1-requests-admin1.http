@@ -1,0 +1,41 @@
+### Get Keycloak JWT access token
+POST {{base-url-keycloack-service}}/realms/{{keycloack-realm}}/protocol/openid-connect/token
+Content-Type: application/x-www-form-urlencoded
+Accept: application/json
+
+client_id={{keycloack-client-id}}
+    &client_secret={{keycloack-client-secret}}
+    &username={{keycloack-username-admin1}}
+    &password={{keycloack-password-admin1}}
+    &grant_type=password
+
+> {%
+    client.test("Request executed successfully", function () {client.assert(response.status === 200, "Response status is not 200");});
+    client.test("Response has ACCESS_TOKEN", function () {client.assert(response.body.access_token != null, "Response has not returned ACCESS_TOKEN");});
+    client.global.set("ACCESS_TOKEN_ADMIN1", response.body.access_token)
+ %}
+
+### Admin endpoint with JWT Token
+GET {{base-url-rest-api}}/api/v1/admin
+Authorization: Bearer {{ACCESS_TOKEN_ADMIN1}}
+
+> {%
+    client.test("Request executed successfully", function () {client.assert(response.status === 200, "Response status is not 200");});
+    client.test("Response body as expected", function () {client.assert(response.body, "This endpoint is protected for ADMINS 🔒");});
+ %}
+
+### Private endpoint with JWT Token
+GET {{base-url-rest-api}}/api/v1/private
+Authorization: Bearer {{ACCESS_TOKEN_ADMIN1}}
+
+> {%
+    client.test("Request executed successfully", function () {client.assert(response.status === 403, "Response status is not 403");});
+ %}
+
+### Public endpoint without JWT Token
+GET {{base-url-rest-api}}/api/v1/public
+
+> {%
+    client.test("Request executed successfully", function () {client.assert(response.status === 200, "Response status is not 200");});
+    client.test("Response body as expected", function () {client.assert(response.body, "This endpoint is public 🚀");});
+ %}

@@ -1,0 +1,47 @@
+name: rest-keycloack-service
+services:
+  keycloak:
+    image: quay.io/keycloak/keycloak:26.5
+    container_name: keycloak
+    restart: always
+    command: start-dev --import-realm
+    environment:
+      #      KC_DB: postgres
+      #      KC_DB_URL: jdbc:postgresql://postgres:5432/rest_keycloack_service_db?currentSchema=keycloak
+      #      KC_DB_USERNAME: keycloak_admin
+      #      KC_DB_PASSWORD: password
+      KC_BOOTSTRAP_ADMIN_USERNAME: admin
+      KC_BOOTSTRAP_ADMIN_PASSWORD: password
+    ports:
+      - "8081:8080"
+    networks:
+      - rest-keycloack-service
+    volumes:
+      - ./compose/keycloak/realm-export.json:/opt/keycloak/data/import/realm-export.json
+  #    depends_on:
+  #      - postgres
+
+# ---------------------------------------------------------------------------------------
+# ENABLE if you want to persist KeyCloack data in the database
+# ---------------------------------------------------------------------------------------
+
+#  postgres:
+#    image: 'postgres:18.1-alpine'
+#    container_name: postgres-db
+#    restart: always
+#    environment:
+#      - 'POSTGRES_DB=rest_keycloack_service_db'
+#      - 'POSTGRES_USER=owner'
+#      - 'POSTGRES_PASSWORD=password'
+#    ports:
+#      - '5432:5432'
+#    networks:
+#      - rest-keycloack-service
+#    volumes:
+#      - ./compose/postgres:/docker-entrypoint-initdb.d
+#    command: [ "postgres", "-c", "log_statement=all" ]
+
+networks:
+  rest-keycloack-service:
+    labels:
+      - rest-keycloack-service-network
