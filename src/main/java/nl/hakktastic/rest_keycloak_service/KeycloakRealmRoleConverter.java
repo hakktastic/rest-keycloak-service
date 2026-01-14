@@ -1,4 +1,4 @@
-package nl.hakktastic.rest_keycloack_service;
+package nl.hakktastic.rest_keycloak_service;
 
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;

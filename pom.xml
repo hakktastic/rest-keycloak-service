@@ -11,9 +11,9 @@
   </parent>
 
   <groupId>nl.hakktastic</groupId>
-  <artifactId>rest-keycloack-service</artifactId>
+  <artifactId>rest-keycloak-service</artifactId>
   <version>0.0.1-SNAPSHOT</version>
-  <name>rest-keycloack-service</name>
+  <name>rest-keycloak-service</name>
   <description>REST service to demonstrate OAuth2 security with use of Keycloack</description>
 
   <properties>
