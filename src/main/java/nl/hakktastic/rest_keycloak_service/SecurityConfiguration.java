@@ -23,6 +23,7 @@ public class SecurityConfiguration {
                 )
                 .oauth2ResourceServer(
                         oauth2 -> oauth2.jwt(jwt -> jwt.jwtAuthenticationConverter(jwtAuthenticationConverter()))
+                        // TODO Exception handling for 401 and 403
                 )
                 .build();
     }
