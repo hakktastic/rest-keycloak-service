@@ -22,7 +22,7 @@ services:
   #      - postgres
 
 # ---------------------------------------------------------------------------------------
-# ENABLE if you want to persist KeyCloack data in the database
+# ENABLE if you want to persist KeyCloak data in the database
 # ---------------------------------------------------------------------------------------
 
 #  postgres:
